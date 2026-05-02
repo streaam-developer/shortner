@@ -17,6 +17,7 @@ async def is_cloudflare_challenge(page: Page) -> bool:
     # Check for Turnstile or other challenge elements
     turnstile_selector = 'div.cf-turnstile, #cf-turnstile, iframe[src*="challenges.cloudflare.com"]'
     challenge_form_selector = '#challenge-form'
+    verifying_selector = '#verifying'
     
     try:
         if await page.query_selector(turnstile_selector):
@@ -24,6 +25,9 @@ async def is_cloudflare_challenge(page: Page) -> bool:
             return True
         if await page.query_selector(challenge_form_selector):
             print("Cloudflare challenge form detected by element.")
+            return True
+        if await page.query_selector(verifying_selector):
+            print("Cloudflare 'Verifying...' challenge detected by element.")
             return True
     except Exception as e:
         print(f"An error occurred while checking for Cloudflare elements: {e}")
