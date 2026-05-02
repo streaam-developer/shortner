@@ -54,8 +54,10 @@ async def main():
         try:
             print(f"Navigating to {TARGET_URL}...")
             await page.goto(TARGET_URL, wait_until="domcontentloaded", timeout=60000)
+            print("Successfully navigated to the page.")
 
             if await is_cloudflare_challenge(page):
+                print("Cloudflare challenge detected. Attempting to solve...")
                 if not await solve_cloudflare_challenge(context, page):
                     print("Failed to solve Cloudflare challenge. Exiting.")
                     return
@@ -63,9 +65,8 @@ async def main():
                 if await is_cloudflare_challenge(page):
                     print("Cloudflare challenge persists after attempting to solve it.")
                     return
+                print("Cloudflare challenge solved successfully.")
 
-            print("Successfully navigated to the page.")
-            
             report_button_selector = "button.btn.btn-primary.js-report-start-btn"
             print(f"Looking for button: '{report_button_selector}'")
             await page.locator(report_button_selector).click(timeout=30000)
