@@ -1,6 +1,6 @@
 import asyncio
 from playwright.async_api import async_playwright
-from playwright_stealth import stealth_async
+from playwright_stealth import stealth
 from urllib.parse import urlparse
 from scraper_utils import is_cloudflare_challenge, solve_cloudflare_challenge, USER_AGENT
 
@@ -52,7 +52,7 @@ async def main():
         page = await context.new_page()
 
         # Apply stealth measures
-        await stealth_async(page)
+        await stealth(page)
 
         try:
             print(f"Navigating to {TARGET_URL}...")
