@@ -72,7 +72,7 @@ async def main():
             print("Button 'Report illegal content' clicked.")
 
             print("Waiting for 30 seconds...")
-            await page.wait_for_timeout(30000)
+            await page.wait_for_timeout(300000)
             
             print("Wait finished. Script completed successfully.")
 
