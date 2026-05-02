@@ -1,6 +1,6 @@
 import asyncio
 from playwright.async_api import async_playwright
-from playwright_stealth import stealth_async
+from playwright_stealth.stealth import stealth_async
 from scraper_utils import is_cloudflare_challenge, solve_cloudflare_challenge, USER_AGENT
 
 # --- Configuration ---
