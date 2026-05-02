@@ -1,6 +1,6 @@
 import asyncio
 from playwright.async_api import async_playwright
-from playwright_stealth.stealth import stealth_async
+from playwright_stealth import Stealth
 from urllib.parse import urlparse
 from scraper_utils import is_cloudflare_challenge, solve_cloudflare_challenge, USER_AGENT
 
@@ -37,7 +37,7 @@ async def main():
         print("Proxy configuration is invalid. Exiting.")
         return
 
-    async with async_playwright() as p:
+    async with Stealth().use_async(async_playwright()) as p:
         print("Launching browser with proxy...")
         browser = await p.chromium.launch(
             headless=False,  # Set to True for production, False for debugging
@@ -50,9 +50,6 @@ async def main():
             viewport={'width': 1920, 'height': 1080}
         )
         page = await context.new_page()
-
-        # Apply stealth measures
-        await stealth_async(page)
 
         try:
             print(f"Navigating to {TARGET_URL}...")
